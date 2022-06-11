@@ -27,15 +27,14 @@ resource apiStorage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
   }
 }
 
-// "per-usage" billing
+
 resource apiHostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
   name: '${name}plan'
   location: location
   sku: {
     name: 'Y1'
     tier: 'dynamic'
-  }
-  
+  } 
 }
 
 resource apiInsights 'Microsoft.Insights/components@2020-02-02-preview' = {

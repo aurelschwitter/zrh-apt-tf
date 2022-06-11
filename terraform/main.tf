@@ -15,7 +15,7 @@ variable "location" {
 }
 
 variable "prefix" {
-  default = "zrhapttf"
+  default = "zrhapttf2"
 }
 
 provider "azurerm" {
@@ -23,7 +23,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "apiTf" {
-  name     = "zrh-apt-tf"
+  name     = "zrh-apt-tf2"
   location = var.location
 }
 
@@ -53,7 +53,7 @@ resource "azurerm_service_plan" "apiTf" {
   sku_name            = "Y1"
 }
 
-resource "azurerm_linux_function_app" "apiTf" {
+resource "azurerm_windows_function_app" "apiTf" {
   name                       = "${var.prefix}-funcapp"
   location                   = var.location
   resource_group_name        = azurerm_resource_group.apiTf.name
@@ -66,15 +66,18 @@ resource "azurerm_linux_function_app" "apiTf" {
   app_settings = {
     /*"AzureWebJobsDashboard"                    = "DefaultEndpointsProtocol=https;AccountName=${azurerm_storage_account.apiTf.name};AccountKey=${azurerm_storage_account.apiTf.primary_access_key}"
     "AzureWebJobsStorage"                      = "DefaultEndpointsProtocol=https;AccountName=${azurerm_storage_account.apiTf.name};AccountKey=${azurerm_storage_account.apiTf.primary_access_key}"
-    "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING" = "DefaultEndpointsProtocol=https;AccountName=${azurerm_storage_account.apiTf.name};AccountKey=${azurerm_storage_account.apiTf.primary_access_key}"*/
+    
     //"FUNCTIONS_EXTENSION_VERSION"              = "~4"
-    //"APPINSIGHTS_INSTRUMENTATIONKEY"           = azurerm_application_insights.apiTf.instrumentation_key
-    "FUNCTIONS_WORKER_RUNTIME"     = "node"
-    "WEBSITE_NODE_DEFAULT_VERSION" = "~16"
+    //"APPINSIGHTS_INSTRUMENTATIONKEY"           = azurerm_application_insights.apiTf.instrumentation_key*/
+    "FUNCTIONS_WORKER_RUNTIME"                 = "node"
+    "WEBSITE_NODE_DEFAULT_VERSION"             = "~16"
+    //"WEBSITE_CONTENTAZUREFILECONNECTIONSTRING" = "DefaultEndpointsProtocol=https;AccountName=${azurerm_storage_account.apiTf.name};AccountKey=${azurerm_storage_account.apiTf.primary_access_key}"
+    //"WEBSITE_CONTENTHARE" = "${azure}"
   }
   site_config {
     application_insights_key               = azurerm_application_insights.apiTf.instrumentation_key
     application_insights_connection_string = azurerm_application_insights.apiTf.connection_string
+
 
   }
 }
